@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { authRoutes, LOGIN_REDIRECT, protectedRoutes } from "./routes";
 import { getUser } from "./actions/getUser";
+import { prisma } from "./lib/prisma";
 
 export async function middleware(request: NextRequest) {
   const currentUrl = request.nextUrl.pathname;
@@ -15,6 +16,15 @@ export async function middleware(request: NextRequest) {
   if (protectedRoutes.includes(currentUrl) && !session) {
     return NextResponse.redirect(new URL("/auth/login", request.url));
   }
+
+  const data = await prisma.boardId.findMany();
+
+  if (currentUrl === "/workspace" && data.length >= 1) {
+    return NextResponse.redirect(
+      new URL(`/workspace/${data[0].id}`, request.url)
+    );
+  }
+
   return NextResponse.next();
 }
 

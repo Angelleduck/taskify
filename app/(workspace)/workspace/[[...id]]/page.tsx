@@ -1,20 +1,22 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { pristest } from "@/actions/pristest";
+import { Accordion } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import {
-  Activity,
-  CreditCard,
-  Layout,
-  Plus,
-  Settings,
-  UserRound,
-} from "lucide-react";
+import { CreditCard, Plus, UserRound } from "lucide-react";
+import { AccordionList } from "../../_components/accordion-list";
 
-export default async function Page() {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ id?: string[] }>;
+}) {
+  const boards = await pristest();
+  const { id } = await params;
+  const path = id?.join("/");
+
+  if (boards.length === 0) {
+    return <h1>hi</h1>;
+  }
+
   return (
     <main className=" max-w-screen-xl mx-auto px-4 mt-10">
       <div className="flex gap-6">
@@ -27,80 +29,22 @@ export default async function Page() {
           </div>
           <div>
             <Accordion
-              type="single"
-              collapsible
+              type="multiple"
               className="w-full space-y-2"
-              defaultValue="item-1"
+              defaultValue={[
+                "cmfh9inhh0000uer8roi5zqre",
+                "cmfh9itws0001uer8klisz61w",
+              ]}
             >
-              <AccordionItem value="item-1">
-                <AccordionTrigger className="bg-sky-500/10 text-sky-700 rounded-md p-[10px]">
-                  Foo Inc
-                </AccordionTrigger>
-                <AccordionContent className="flex flex-col gap-2 text-balance pt-2">
-                  <div className="flex items-center gap-2 bg-neutral-200 rounded-md p-2 pl-10">
-                    <Layout size={16} />
-                    Board
-                  </div>
-                  <div className="flex items-center gap-2 bg-neutral-200 rounded-md p-2 pl-10">
-                    <Activity size={16} />
-                    Activity
-                  </div>
-                  <div className="flex items-center gap-2 bg-neutral-200 rounded-md p-2 pl-10">
-                    <Settings size={16} />
-                    Settings
-                  </div>
-                  <div className="flex items-center gap-2 bg-neutral-200 rounded-md p-2 pl-10">
-                    <CreditCard size={16} />
-                    Billing
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-2">
-                <AccordionTrigger className="bg-sky-500/10 text-sky-700 rounded-md p-[10px]">
-                  Foo Inc
-                </AccordionTrigger>
-                <AccordionContent className="flex flex-col gap-2 text-balance pt-2">
-                  <div className="flex items-center gap-2 bg-neutral-200 rounded-md p-2 pl-10">
-                    <Layout size={16} />
-                    Board
-                  </div>
-                  <div className="flex items-center gap-2 bg-neutral-200 rounded-md p-2 pl-10">
-                    <Activity size={16} />
-                    Activity
-                  </div>
-                  <div className="flex items-center gap-2 bg-neutral-200 rounded-md p-2 pl-10">
-                    <Settings size={16} />
-                    Settings
-                  </div>
-                  <div className="flex items-center gap-2 bg-neutral-200 rounded-md p-2 pl-10">
-                    <CreditCard size={16} />
-                    Billing
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-3">
-                <AccordionTrigger className="bg-sky-500/10 text-sky-700 rounded-md p-[10px]">
-                  Foo Inc
-                </AccordionTrigger>
-                <AccordionContent className="flex flex-col gap-2 text-balance pt-2">
-                  <div className="flex items-center gap-2 bg-neutral-200 rounded-md p-2 pl-10">
-                    <Layout size={16} />
-                    Board
-                  </div>
-                  <div className="flex items-center gap-2 bg-neutral-200 rounded-md p-2 pl-10">
-                    <Activity size={16} />
-                    Activity
-                  </div>
-                  <div className="flex items-center gap-2 bg-neutral-200 rounded-md p-2 pl-10">
-                    <Settings size={16} />
-                    Settings
-                  </div>
-                  <div className="flex items-center gap-2 bg-neutral-200 rounded-md p-2 pl-10">
-                    <CreditCard size={16} />
-                    Billing
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
+              {boards.map((board) => (
+                <AccordionList
+                  key={board.id}
+                  keyItem={board.id}
+                  boardId={board.id}
+                  title={board.name}
+                  path={path}
+                />
+              ))}
             </Accordion>
           </div>
         </div>

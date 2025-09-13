@@ -16,11 +16,13 @@ import { ErrorCard } from "@/components/auth/error-card";
 import { GithubButton } from "@/components/auth/github-button";
 import ButtonSubmit from "@/components/auth/submit-button";
 import Logo from "@/components/logo";
+import { useRouter } from "next/navigation";
 
 type InputField = z.infer<typeof loginSchema>;
 
 export default function Page() {
   const [message, setMessage] = useState("");
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -48,8 +50,9 @@ export default function Page() {
         return;
       }
 
-      window.location.href = "/workspace";
-    } catch {
+      router.replace("/workspace");
+    } catch (error) {
+      console.log(error);
       setError("root", {
         message: "Sorry, something went wrong",
       });
