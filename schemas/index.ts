@@ -49,10 +49,18 @@ const emailSchema = z.object({
   email: z.string().email("Invalid email address"),
 });
 
+const createWorkspaceSchema = z.object({
+  title: z
+    .string()
+    .min(4, "Workspace's name must be at least 4 characters")
+    .max(15, "Workspace's name must be at most 15 characters"),
+});
+
 export {
   loginSchema,
   registerSchema,
   resetSchema,
   newPasswordSchema,
   emailSchema,
+  createWorkspaceSchema,
 };

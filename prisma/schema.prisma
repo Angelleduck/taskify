@@ -87,9 +87,9 @@ model TwoFactor {
 }
 
 
-model BoardId{
+model Workspace{
   id String @id @default(cuid())
   name String
 
-  @@map("boardId")
+  @@map("workspace")
 }

@@ -13,11 +13,11 @@ export async function middleware(request: NextRequest) {
       : NextResponse.next();
   }
 
-  if (protectedRoutes.includes(currentUrl) && !session) {
+  if (protectedRoutes.some((s) => currentUrl.startsWith(s)) && !session) {
     return NextResponse.redirect(new URL("/auth/login", request.url));
   }
 
-  const data = await prisma.boardId.findMany();
+  const data = await prisma.workspace.findMany();
 
   if (currentUrl === "/workspace" && data.length >= 1) {
     return NextResponse.redirect(

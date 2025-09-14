@@ -10,39 +10,44 @@ import { AccordionLink } from "./accordion-link";
 
 interface AccorProps {
   keyItem: string;
-  boardId: string;
+  workspaceId: string;
   title: string;
   path?: string;
 }
 
-export function AccordionList({ keyItem, boardId, title, path }: AccorProps) {
+export function AccordionList({
+  keyItem,
+  workspaceId,
+  title,
+  path,
+}: AccorProps) {
   const items = [
     {
       Icon: Layout,
       name: "Board",
-      href: `/workspace/${boardId}`,
+      href: `/workspace/${workspaceId}`,
     },
     {
       Icon: Activity,
       name: "Activity",
-      href: `/workspace/${boardId}/activity`,
+      href: `/workspace/${workspaceId}/activity`,
     },
     {
       Icon: Settings,
       name: "Settings",
-      href: `/workspace/${boardId}/settings`,
+      href: `/workspace/${workspaceId}/settings`,
     },
     {
       Icon: CreditCard,
       name: "Billing",
-      href: `/workspace/${boardId}/billing`,
+      href: `/workspace/${workspaceId}/billing`,
     },
   ];
   return (
-    <AccordionItem key={keyItem} value={boardId}>
+    <AccordionItem key={keyItem} value={workspaceId}>
       <AccordionTrigger
         className={`${
-          path?.includes(boardId) && "bg-sky-500/10 text-sky-700"
+          path?.includes(workspaceId) && "bg-sky-500/10 text-sky-700"
         } rounded-md p-[10px]`}
       >
         {title}

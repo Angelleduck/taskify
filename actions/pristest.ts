@@ -3,6 +3,6 @@
 import { prisma } from "@/lib/prisma";
 
 export async function pristest() {
-  const boards = await prisma.boardId.findMany();
-  return boards;
+  const workspaces = await prisma.workspace.findMany();
+  return workspaces;
 }

@@ -6,7 +6,7 @@ interface InputProps<T extends FieldValues> {
   register: UseFormRegister<T>;
   id: Path<T>;
   type: "email" | "password" | "text";
-  placeholder: string;
+  placeholder?: string;
 }
 
 export function Input<T extends FieldValues>({
