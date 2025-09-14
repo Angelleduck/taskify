@@ -1,9 +1,9 @@
 import { pristest } from "@/actions/pristest";
 import { Accordion } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
-import { CreditCard, Plus, UserRound } from "lucide-react";
+import { CreditCard, HelpCircle, UserRound } from "lucide-react";
 import { AccordionList } from "../../_components/accordion-list";
 import { DialogCreateButton } from "../../_components/create-button";
+import Hint from "../../_components/hint";
 
 export default async function Page({
   params,
@@ -64,7 +64,11 @@ export default async function Page({
               Your workspaces
             </div>
             <div>
-              <div className="w-24 h-24 bg-neutral-300 rounded-md"></div>
+              <div className="w-[221px] h-[124px] bg-neutral-100 rounded-md flex items-center justify-center flex-col relative">
+                <h3 className="text-sm">Create new board</h3>
+                <p className="text-xs">5 remaning</p>
+                <Hint />
+              </div>
             </div>
           </div>
         </div>
