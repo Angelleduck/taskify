@@ -4,6 +4,7 @@ import { Accordion } from "@/components/ui/accordion";
 import { DialogCreateButton } from "./create-button";
 import { AccordionList } from "./accordion-list";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface SidebarProps {
   workspaces: {
@@ -13,6 +14,32 @@ interface SidebarProps {
 }
 export function Sidebar({ workspaces }: SidebarProps) {
   const path = usePathname();
+
+  const [state, setState] = useState<string[]>([]);
+
+  //The first useeffect it to create the key or get the value
+  //to store it in the state
+  useEffect(() => {
+    const storedValue = localStorage.getItem("sidebarKey");
+    const getIds = storedValue ? JSON.parse(storedValue) : [];
+    setState(getIds);
+  }, []);
+
+  //the second on is to update the local storage
+  useEffect(() => {
+    localStorage.setItem("sidebarKey", JSON.stringify(state));
+  }, [state]);
+
+  function handleKey(id: string) {
+    //normally I would use includes and filter to check and remove the id
+    //but this means two loops, with set it's more performant
+    const set = new Set(state);
+    set.has(id) ? set.delete(id) : set.add(id);
+    const newArray = Array.from(set);
+
+    setState(newArray);
+  }
+
   return (
     <div className="w-64">
       <div className="flex items-center justify-between ml-4 mb-2 text-xs font-medium">
@@ -24,10 +51,8 @@ export function Sidebar({ workspaces }: SidebarProps) {
         <Accordion
           type="multiple"
           className="w-full space-y-2"
-          defaultValue={[
-            "cmfh9inhh0000uer8roi5zqre",
-            "cmfh9itws0001uer8klisz61w",
-          ]}
+          value={state}
+          onValueChange={setState}
         >
           {workspaces.map((workspace) => (
             <AccordionList
@@ -36,6 +61,7 @@ export function Sidebar({ workspaces }: SidebarProps) {
               workspaceId={workspace.id}
               title={workspace.name}
               path={path}
+              handleKey={handleKey}
             />
           ))}
         </Accordion>

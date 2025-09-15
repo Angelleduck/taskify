@@ -7,12 +7,14 @@ import {
 } from "@/components/ui/accordion";
 import { Activity, CreditCard, Layout, Settings } from "lucide-react";
 import { AccordionLink } from "./accordion-link";
+import { Dispatch, SetStateAction } from "react";
 
 interface AccorProps {
   keyItem: string;
   workspaceId: string;
   title: string;
   path?: string;
+  handleKey: (id: string) => void;
 }
 
 export function AccordionList({
@@ -20,6 +22,7 @@ export function AccordionList({
   workspaceId,
   title,
   path,
+  handleKey,
 }: AccorProps) {
   const items = [
     {
@@ -43,9 +46,11 @@ export function AccordionList({
       href: `/workspace/${workspaceId}/billing`,
     },
   ];
+
   return (
     <AccordionItem key={keyItem} value={workspaceId}>
       <AccordionTrigger
+        onClick={() => handleKey(workspaceId)}
         className={`${
           path?.includes(workspaceId) && "bg-sky-500/10 text-sky-700"
         } rounded-md p-[10px]`}
