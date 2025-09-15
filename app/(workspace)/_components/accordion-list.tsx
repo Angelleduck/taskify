@@ -59,7 +59,7 @@ export function AccordionList({
             Icon={item.Icon}
             href={item.href}
             title={item.name}
-            active={`/workspace/${path}` === item.href}
+            active={path === item.href}
           />
         ))}
       </AccordionContent>

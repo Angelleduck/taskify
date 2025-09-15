@@ -52,7 +52,6 @@ export default function Page() {
 
       router.replace("/workspace");
     } catch (error) {
-      console.log(error);
       setError("root", {
         message: "Sorry, something went wrong",
       });

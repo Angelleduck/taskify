@@ -1,7 +1,7 @@
 import Logo from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import Link from "next/link";
+import { UserButton } from "./user-button";
 
 export default function Navbar() {
   return (
@@ -13,14 +13,7 @@ export default function Navbar() {
           Create
         </Button>
       </div>
-      <nav className="flex gap-2">
-        <Button variant="outline" asChild>
-          <Link href="/auth/login">Login</Link>
-        </Button>
-        <Button asChild>
-          <Link href="/auth/register">Get Taskify for free</Link>
-        </Button>
-      </nav>
+      <UserButton />
     </header>
   );
 }
