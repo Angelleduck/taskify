@@ -5,7 +5,6 @@ import { DialogCreateButton } from "../create-button";
 import { AccordionList } from "../accordion-list";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useStore } from "@/hooks/useWorkspaceId";
 import { cn } from "@/lib/utils";
 
 interface SidebarProps extends React.ButtonHTMLAttributes<HTMLDivElement> {
@@ -15,12 +14,6 @@ interface SidebarProps extends React.ButtonHTMLAttributes<HTMLDivElement> {
   }[];
 }
 export function Sidebar({ workspaces, className }: SidebarProps) {
-  const { onUpdate } = useStore();
-  useEffect(() => {
-    //take the workspace and share it to responsive sidebar
-    onUpdate(workspaces);
-  }, []);
-
   const path = usePathname();
   const [state, setState] = useState<string[]>([]);
 

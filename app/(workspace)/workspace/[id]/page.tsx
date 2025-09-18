@@ -1,22 +1,27 @@
 import { CreditCard, UserRound } from "lucide-react";
 import Hint from "../../_components/hint";
-import { workspaces } from "@/actions/workspaces/get-workspaces";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import BoardPopup from "../../_components/board/board-popup";
+import { BoardPopup } from "../../_components/board/board-popup";
+import { workspaces } from "@/actions/workspace/get-workspaces";
+import { boards } from "@/actions/board/get-boards";
+import BoardBox from "@/app/(board)/_components/board-box";
 
 export default async function Page({
   params,
 }: {
   params: Promise<{ id?: string }>;
 }) {
-  const data = await workspaces();
-
   const { id } = await params;
-  const titleName = data.find((workspace) => workspace.id === id);
+  const _workspaces = await workspaces();
+  const _boards = await boards(id);
+
+  console.log(_boards);
+
+  const titleName = _workspaces.find((workspace) => workspace.id === id);
 
   return (
     <>
@@ -32,67 +37,15 @@ export default async function Page({
           <UserRound />
           Your workspaces
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          <Popover>
-            <PopoverTrigger>
-              <div className="h-[124px] bg-neutral-100 rounded-md flex items-center justify-center flex-col relative">
-                <h3 className="text-sm">Create new board</h3>
-                <p className="text-xs">5 remaining</p>
-                <Hint />
-              </div>
-            </PopoverTrigger>
-            <PopoverContent className="w-[320px] p-4">
-              <BoardPopup workspaceId={id} />
-            </PopoverContent>
-          </Popover>
-          <Popover>
-            <PopoverTrigger>
-              <div className="h-[124px] bg-neutral-100 rounded-md flex items-center justify-center flex-col relative">
-                <h3 className="text-sm">Create new board</h3>
-                <p className="text-xs">5 remaining</p>
-                <Hint />
-              </div>
-            </PopoverTrigger>
-            <PopoverContent className="w-[320px] p-4">
-              <BoardPopup workspaceId={id} />
-            </PopoverContent>
-          </Popover>
-          <Popover>
-            <PopoverTrigger>
-              <div className="h-[124px] bg-neutral-100 rounded-md flex items-center justify-center flex-col relative">
-                <h3 className="text-sm">Create new board</h3>
-                <p className="text-xs">5 remaining</p>
-                <Hint />
-              </div>
-            </PopoverTrigger>
-            <PopoverContent className="w-[320px] p-4">
-              <BoardPopup workspaceId={id} />
-            </PopoverContent>
-          </Popover>
-          <Popover>
-            <PopoverTrigger>
-              <div className="h-[124px] bg-neutral-100 rounded-md flex items-center justify-center flex-col relative">
-                <h3 className="text-sm">Create new board</h3>
-                <p className="text-xs">5 remaining</p>
-                <Hint />
-              </div>
-            </PopoverTrigger>
-            <PopoverContent className="w-[320px] p-4">
-              <BoardPopup workspaceId={id} />
-            </PopoverContent>
-          </Popover>
-          <Popover>
-            <PopoverTrigger>
-              <div className="h-[124px] bg-neutral-100 rounded-md flex items-center justify-center flex-col relative">
-                <h3 className="text-sm">Create new board</h3>
-                <p className="text-xs">5 remaining</p>
-                <Hint />
-              </div>
-            </PopoverTrigger>
-            <PopoverContent className="w-[320px] p-4">
-              <BoardPopup workspaceId={id} />
-            </PopoverContent>
-          </Popover>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[124px]">
+          {_boards.map((board, idx) => (
+            <BoardBox
+              key={idx}
+              href={`/board/${board.id}`}
+              imageSrc={board.thumb_url}
+              name={board.name}
+            />
+          ))}
           <Popover>
             <PopoverTrigger>
               <div className="h-[124px] bg-neutral-100 rounded-md flex items-center justify-center flex-col relative">

@@ -1,5 +1,5 @@
 import { Sidebar } from "../../_components/sidebard/sidebar";
-import { workspaces } from "@/actions/workspaces/get-workspaces";
+import { workspaces } from "@/actions/workspace/get-workspaces";
 
 export default async function Layout({
   children,

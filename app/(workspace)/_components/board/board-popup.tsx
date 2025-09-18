@@ -1,7 +1,7 @@
 "use client";
 
-import { CreateBoard } from "@/actions/create-board";
-import { boardPopuSchema } from "@/actions/create-board/schema";
+import { CreateBoard } from "@/actions/board/create-board";
+import { boardPopuSchema } from "@/actions/board/schema";
 import { getImages } from "@/actions/get-images";
 import { Input } from "@/components/auth/input";
 import { Button } from "@/components/ui/button";
@@ -23,7 +23,7 @@ interface BoardProps {
 
 type InputField = z.infer<typeof boardPopuSchema>;
 
-export default function BoardPopup({ workspaceId }: BoardProps) {
+export function BoardPopup({ workspaceId }: BoardProps) {
   const [images, setImages] = useState<Array<Record<string, any>>>([]);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<Record<string, any>>();
