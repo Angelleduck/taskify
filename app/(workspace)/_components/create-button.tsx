@@ -1,6 +1,6 @@
 "use client";
 
-import { createWorkspace } from "@/actions/create-workspace";
+import { createWorkspace } from "@/actions/workspaces/create-workspace";
 import { Input } from "@/components/auth/input";
 import { Button } from "@/components/ui/button";
 import {

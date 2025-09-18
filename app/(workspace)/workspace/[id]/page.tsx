@@ -1,6 +1,12 @@
 import { CreditCard, UserRound } from "lucide-react";
 import Hint from "../../_components/hint";
-import { workspaces } from "@/actions/get-workspaces";
+import { workspaces } from "@/actions/workspaces/get-workspaces";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import BoardPopup from "../../_components/board/board-popup";
 
 export default async function Page({
   params,
@@ -26,12 +32,79 @@ export default async function Page({
           <UserRound />
           Your workspaces
         </div>
-        <div>
-          <div className="w-[221px] h-[124px] bg-neutral-100 rounded-md flex items-center justify-center flex-col relative">
-            <h3 className="text-sm">Create new board</h3>
-            <p className="text-xs">5 remaning</p>
-            <Hint />
-          </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          <Popover>
+            <PopoverTrigger>
+              <div className="h-[124px] bg-neutral-100 rounded-md flex items-center justify-center flex-col relative">
+                <h3 className="text-sm">Create new board</h3>
+                <p className="text-xs">5 remaining</p>
+                <Hint />
+              </div>
+            </PopoverTrigger>
+            <PopoverContent className="w-[320px] p-4">
+              <BoardPopup workspaceId={id} />
+            </PopoverContent>
+          </Popover>
+          <Popover>
+            <PopoverTrigger>
+              <div className="h-[124px] bg-neutral-100 rounded-md flex items-center justify-center flex-col relative">
+                <h3 className="text-sm">Create new board</h3>
+                <p className="text-xs">5 remaining</p>
+                <Hint />
+              </div>
+            </PopoverTrigger>
+            <PopoverContent className="w-[320px] p-4">
+              <BoardPopup workspaceId={id} />
+            </PopoverContent>
+          </Popover>
+          <Popover>
+            <PopoverTrigger>
+              <div className="h-[124px] bg-neutral-100 rounded-md flex items-center justify-center flex-col relative">
+                <h3 className="text-sm">Create new board</h3>
+                <p className="text-xs">5 remaining</p>
+                <Hint />
+              </div>
+            </PopoverTrigger>
+            <PopoverContent className="w-[320px] p-4">
+              <BoardPopup workspaceId={id} />
+            </PopoverContent>
+          </Popover>
+          <Popover>
+            <PopoverTrigger>
+              <div className="h-[124px] bg-neutral-100 rounded-md flex items-center justify-center flex-col relative">
+                <h3 className="text-sm">Create new board</h3>
+                <p className="text-xs">5 remaining</p>
+                <Hint />
+              </div>
+            </PopoverTrigger>
+            <PopoverContent className="w-[320px] p-4">
+              <BoardPopup workspaceId={id} />
+            </PopoverContent>
+          </Popover>
+          <Popover>
+            <PopoverTrigger>
+              <div className="h-[124px] bg-neutral-100 rounded-md flex items-center justify-center flex-col relative">
+                <h3 className="text-sm">Create new board</h3>
+                <p className="text-xs">5 remaining</p>
+                <Hint />
+              </div>
+            </PopoverTrigger>
+            <PopoverContent className="w-[320px] p-4">
+              <BoardPopup workspaceId={id} />
+            </PopoverContent>
+          </Popover>
+          <Popover>
+            <PopoverTrigger>
+              <div className="h-[124px] bg-neutral-100 rounded-md flex items-center justify-center flex-col relative">
+                <h3 className="text-sm">Create new board</h3>
+                <p className="text-xs">5 remaining</p>
+                <Hint />
+              </div>
+            </PopoverTrigger>
+            <PopoverContent className="w-[320px] p-4">
+              <BoardPopup workspaceId={id} />
+            </PopoverContent>
+          </Popover>
         </div>
       </div>
     </>

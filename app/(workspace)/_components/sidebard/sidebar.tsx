@@ -1,20 +1,27 @@
 "use client";
 
 import { Accordion } from "@/components/ui/accordion";
-import { DialogCreateButton } from "./create-button";
-import { AccordionList } from "./accordion-list";
+import { DialogCreateButton } from "../create-button";
+import { AccordionList } from "../accordion-list";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useStore } from "@/hooks/useWorkspaceId";
+import { cn } from "@/lib/utils";
 
-interface SidebarProps {
+interface SidebarProps extends React.ButtonHTMLAttributes<HTMLDivElement> {
   workspaces: {
     id: string;
     name: string;
   }[];
 }
-export function Sidebar({ workspaces }: SidebarProps) {
-  const path = usePathname();
+export function Sidebar({ workspaces, className }: SidebarProps) {
+  const { onUpdate } = useStore();
+  useEffect(() => {
+    //take the workspace and share it to responsive sidebar
+    onUpdate(workspaces);
+  }, []);
 
+  const path = usePathname();
   const [state, setState] = useState<string[]>([]);
 
   //The first useeffect it to create the key or get the value
@@ -41,7 +48,7 @@ export function Sidebar({ workspaces }: SidebarProps) {
   }
 
   return (
-    <div className="w-64">
+    <div className={cn("w-64", className)}>
       <div className="flex items-center justify-between ml-4 mb-2 text-xs font-medium">
         <h3>Workspaces</h3>
 

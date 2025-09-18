@@ -91,5 +91,17 @@ model Workspace{
   id String @id @default(cuid())
   name String
 
+  board Board[]
   @@map("workspace")
+}
+
+model Board{
+  id String @id @default(cuid())
+  workspaceId String
+  name String
+  image_url String
+  thumb_url String
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id] ,onDelete: Cascade)
+  @@map("board")
 }
