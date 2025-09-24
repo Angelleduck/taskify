@@ -9,6 +9,7 @@
     "biome": "biome lint"
   },
   "dependencies": {
+    "@hello-pangea/dnd": "^18.0.1",
     "@hookform/resolvers": "^5.1.1",
     "@prisma/client": "^6.10.1",
     "@radix-ui/react-accordion": "^1.2.12",

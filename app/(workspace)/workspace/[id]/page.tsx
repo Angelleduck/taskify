@@ -19,8 +19,6 @@ export default async function Page({
   const _workspaces = await workspaces();
   const _boards = await boards(id);
 
-  console.log(_boards);
-
   const titleName = _workspaces.find((workspace) => workspace.id === id);
 
   return (

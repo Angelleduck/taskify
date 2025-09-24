@@ -101,7 +101,26 @@ model Board{
   name String
   image_url String
   thumb_url String
-
+  
+  list List[]
   workspace Workspace @relation(fields: [workspaceId], references: [id] ,onDelete: Cascade)
   @@map("board")
+}
+
+model List{
+  id String @id @default(cuid())
+  boardId String
+  name String
+
+  card Card[]
+  board Board @relation(fields: [boardId], references: [id] ,onDelete: Cascade)
+}
+
+model Card{
+  id String @id @default(cuid())
+  listId String
+  name String
+  order Int
+
+  list List @relation(fields: [listId], references: [id] ,onDelete: Cascade)
 }

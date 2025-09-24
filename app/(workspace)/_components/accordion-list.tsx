@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/accordion";
 import { Activity, CreditCard, Layout, Settings } from "lucide-react";
 import { AccordionLink } from "./accordion-link";
+import { memo, useRef } from "react";
 
 interface AccorProps {
   keyItem: string;

@@ -6,9 +6,9 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
-      <Navbar />
+    <div className="relative">
+      <Navbar className="absolute top-0 w-full" />
       {children}
-    </>
+    </div>
   );
 }
