@@ -5,12 +5,13 @@ import { useClickOutside } from "@/hooks/useClickOutside";
 import { Plus, X } from "lucide-react";
 import { type KeyboardEvent, memo, useEffect, useRef, useState } from "react";
 import { Input } from "@/components/auth/input";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import z from "zod";
+import type z from "zod";
 import { createCardSchema } from "@/actions/card/schema";
 import { createCard } from "@/actions/card/create-card";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 interface AddCardProps {
   listId: string;
@@ -49,13 +50,17 @@ export const AddCard = memo(function AddCard({ listId }: AddCardProps) {
   useClickOutside(formRef, disableEditing);
 
   const onsubmit: SubmitHandler<InputField> = async (data) => {
-    await createCard(data);
+    const res = await createCard(data);
+
+    if (res.error) {
+      toast(res.error);
+    }
     reset();
     router.refresh();
   };
 
   const submitOnkeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.code == "Enter") {
+    if (e.code === "Enter") {
       e.preventDefault();
       formRef.current?.requestSubmit();
     }
@@ -67,7 +72,7 @@ export const AddCard = memo(function AddCard({ listId }: AddCardProps) {
         <form
           onSubmit={handleSubmit(onsubmit)}
           ref={formRef}
-          className="w-full py-3 rounded-md"
+          className="w-full pb-3 rounded-md"
         >
           <textarea
             id="name"

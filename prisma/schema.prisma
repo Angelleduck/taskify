@@ -111,9 +111,12 @@ model List{
   id String @id @default(cuid())
   boardId String
   name String
+  order Int
 
-  card Card[]
+  cards Card[]
   board Board @relation(fields: [boardId], references: [id] ,onDelete: Cascade)
+
+  @@map("list")
 }
 
 model Card{
@@ -123,4 +126,6 @@ model Card{
   order Int
 
   list List @relation(fields: [listId], references: [id] ,onDelete: Cascade)
+
+  @@map("card")
 }

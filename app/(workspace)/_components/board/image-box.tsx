@@ -21,7 +21,7 @@ export function ImageBox(props: ImageBoxProps) {
         alt={image.atl_description}
       />
 
-      {image.id == selectedImage?.id && (
+      {image.id === selectedImage?.id && (
         <div className="flex items-center justify-center absolute inset-0 h-full bg-black/30">
           <Check size={18} className="text-white" />
         </div>

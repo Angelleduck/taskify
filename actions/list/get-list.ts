@@ -10,7 +10,7 @@ export async function getLists(boardId?: string) {
       boardId,
     },
     include: {
-      card: true,
+      cards: true,
     },
   });
 

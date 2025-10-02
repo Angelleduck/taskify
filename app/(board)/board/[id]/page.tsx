@@ -4,7 +4,7 @@ import { Ellipsis } from "lucide-react";
 import { BoardButton } from "../../_components/board-button";
 import { getLists } from "@/actions/list/get-list";
 import { DragContext } from "../../_components/drag-context";
-import { AddList } from "../../_components/add-list";
+import { Toaster } from "sonner";
 
 export default async function Board({
   params,
@@ -24,6 +24,7 @@ export default async function Board({
       style={{ backgroundImage: `url(${_board.at(0)?.image_url})` }}
       className="h-screen bg-no-repeat bg-cover bg-center"
     >
+      <Toaster />
       <div className="flex items-center justify-between bg-black/40 px-6 py-[10px] absolute top-14 w-full">
         <BoardButton />
 

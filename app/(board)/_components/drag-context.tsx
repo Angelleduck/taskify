@@ -1,22 +1,27 @@
 "use client";
 
-import { List } from "@/actions/list/type";
+import type { ListWithCard } from "@/actions/list/type";
 import { DragDropContext, Droppable, type DropResult } from "@hello-pangea/dnd";
 import { ListContainer } from "./list-container";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AddList } from "./add-list";
+import { updateList } from "@/actions/list/update-list";
+import { updateCard } from "@/actions/card/update-order";
+import { toast } from "sonner";
 
 interface DragContextProps {
-  lists: List[];
+  lists: ListWithCard[];
   boardId: string;
 }
 
 export function DragContext({ lists, boardId }: DragContextProps) {
   const [listsContainer, setListsContainer] = useState(lists);
+  useEffect(() => {
+    setListsContainer(lists);
+  }, [lists]);
 
   const onDragEnd = (result: DropResult<string>) => {
     const { destination, source, type } = result;
-    console.log(result);
 
     if (!destination) return;
 
@@ -33,23 +38,43 @@ export function DragContext({ lists, boardId }: DragContextProps) {
       const [removed] = newArray.splice(source.index, 1);
       newArray.splice(destination.index, 0, removed);
 
+      newArray.forEach((list, idx) => (list.order = idx + 1));
       setListsContainer(newArray);
+      toast.success("List reordered");
+      updateList(newArray);
+
+      //
     } else if (type === "card") {
       const newArray = structuredClone(listsContainer);
 
-      const sourceList = newArray.find((list) => list.id == source.droppableId);
-
+      const sourceList = newArray.find(
+        (list) => list.id === source.droppableId
+      );
       const destinationList = newArray.find(
-        (list) => list.id == destination.droppableId
+        (list) => list.id === destination.droppableId
       );
 
-      if (!sourceList?.card || !destinationList?.card) return;
+      if (!sourceList?.cards || !destinationList?.cards) return;
 
-      const [removed] = sourceList.card.splice(source.index, 1);
+      const [removed] = sourceList.cards.splice(source.index, 1);
 
-      destinationList.card.splice(destination.index, 0, removed);
+      destinationList.cards.splice(destination.index, 0, removed);
+
+      const cardUpdate = [sourceList, destinationList]
+        .flatMap((list) => {
+          return list.cards.map((card, idx) => {
+            return {
+              ...card,
+              order: idx + 1,
+              listId: list.id,
+            };
+          });
+        })
+        .flat();
 
       setListsContainer(newArray);
+      toast.success("Card reordered");
+      updateCard(cardUpdate);
     }
   };
 

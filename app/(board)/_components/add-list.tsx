@@ -7,9 +7,9 @@ import { useEffect, useRef, useState } from "react";
 import { createList } from "@/actions/list/create-list";
 import { createListSchema } from "@/actions/list/schema";
 import { Input } from "@/components/auth/input";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import z from "zod";
+import type z from "zod";
 import { useRouter } from "next/navigation";
 
 interface AddListProps {
@@ -31,6 +31,8 @@ export function AddList({ boardId }: AddListProps) {
     formState: { errors, isSubmitting },
   } = useForm<InputField>({
     resolver: zodResolver(createListSchema),
+    mode: "onSubmit",
+    reValidateMode: "onSubmit",
   });
 
   const { ref, ...rest } = register("name");
