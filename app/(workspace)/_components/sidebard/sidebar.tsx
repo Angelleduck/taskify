@@ -4,8 +4,9 @@ import { Accordion } from "@/components/ui/accordion";
 import { DialogCreateButton } from "../create-button";
 import { AccordionList } from "../accordion-list";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { useIsMounted, useLocalStorage } from "usehooks-ts";
+import Sidebarskeleton from "./sidebar-skeleton";
 
 interface SidebarProps extends React.ButtonHTMLAttributes<HTMLDivElement> {
   workspaces: {
@@ -15,44 +16,32 @@ interface SidebarProps extends React.ButtonHTMLAttributes<HTMLDivElement> {
 }
 export function Sidebar({ workspaces, className }: SidebarProps) {
   const path = usePathname();
-  const [state, setState] = useState<string[]>([]);
-
-  //The first useeffect it to create the key or get the value
-  //to store it in the state
-  useEffect(() => {
-    const storedValue = localStorage.getItem("sidebarKey");
-    const getIds = storedValue ? JSON.parse(storedValue) : [];
-    setState(getIds);
-  }, []);
-
-  //the second on is to update the local storage
-  useEffect(() => {
-    localStorage.setItem("sidebarKey", JSON.stringify(state));
-  }, [state]);
+  const isMounted = useIsMounted();
+  const [value, setValue] = useLocalStorage<string[]>("sidebarKeys", []);
 
   function handleKey(id: string) {
     //normally I would use includes and filter to check and remove the id
     //but this means two loops, with set it's more performant
-    const set = new Set(state);
+    const set = new Set(value);
     set.has(id) ? set.delete(id) : set.add(id);
     const newArray = Array.from(set);
 
-    setState(newArray);
+    setValue(newArray);
   }
+
+  if (!isMounted()) return <Sidebarskeleton />;
 
   return (
     <div className={cn("w-64", className)}>
       <div className="flex items-center justify-between ml-4 mb-2 text-xs font-medium">
         <h3>Workspaces</h3>
-
         <DialogCreateButton />
       </div>
       <div>
         <Accordion
           type="multiple"
           className="w-full space-y-2"
-          value={state}
-          onValueChange={setState}
+          defaultValue={value}
         >
           {workspaces.map((workspace) => (
             <AccordionList

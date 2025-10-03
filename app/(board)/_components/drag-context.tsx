@@ -38,7 +38,9 @@ export function DragContext({ lists, boardId }: DragContextProps) {
       const [removed] = newArray.splice(source.index, 1);
       newArray.splice(destination.index, 0, removed);
 
-      newArray.forEach((list, idx) => (list.order = idx + 1));
+      newArray.forEach((list, idx) => {
+        list.order = idx + 1;
+      });
       setListsContainer(newArray);
       toast.success("List reordered");
       updateList(newArray);

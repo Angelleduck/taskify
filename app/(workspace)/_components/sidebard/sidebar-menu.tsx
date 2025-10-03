@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/sheet";
 import { useEffect, useState } from "react";
 import { workspaces } from "@/actions/workspace/get-workspaces";
-import { Workspaces } from "@/actions/workspace/types";
+import type { Workspaces } from "@/actions/workspace/types";
 import { Sidebar } from "./sidebar";
 import { Menu } from "lucide-react";
 import Logo from "@/components/logo";
