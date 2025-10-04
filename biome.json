@@ -21,7 +21,8 @@
           "level": "error",
           "fix": "safe",
           "options": {}
-        }
+        },
+        "useUniqueElementIds": "off"
       }
     },
     "includes": ["!.next", "!node_modules", "!**/*.d.ts", "**/*.ts", "**/*.tsx"]

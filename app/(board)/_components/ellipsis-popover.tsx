@@ -1,3 +1,4 @@
+import { copyList } from "@/actions/list/copy-list";
 import { deleteList } from "@/actions/list/delete-list";
 import { Button } from "@/components/ui/button";
 import {
@@ -34,11 +35,21 @@ export function EllipsisPopover({ id, handleEdit }: EllipsisPopoverProps) {
       router.refresh();
     }
   }
+  async function handleCopy(id: string) {
+    const res = await copyList(id);
+    if (res.error) {
+      toast.error(res.error);
+    } else {
+      router.refresh();
+      toast.success(res.success);
+    }
+    closeRef.current?.click();
+  }
 
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <button>
+        <button type="button">
           <Ellipsis className="cursor-pointer" />
         </button>
       </PopoverTrigger>
@@ -67,6 +78,7 @@ export function EllipsisPopover({ id, handleEdit }: EllipsisPopoverProps) {
             Add card...
           </Button>
           <Button
+            onClick={() => handleCopy(id)}
             variant="ghost"
             className="rounded-none w-full h-auto p-2 px-5 justify-start font-normal text-sm"
           >

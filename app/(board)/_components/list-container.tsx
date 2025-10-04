@@ -30,7 +30,7 @@ export function ListContainer({ list, index }: ListContainerProps) {
         >
           <div className="w-[272px] shrink-0 p-2 rounded-md bg-[#f2f2f4]">
             <div className="px-3 flex items-center justify-between mb-3">
-              <span className="text-xs">{name}</span>
+              <span className="text-sm font-medium">{name}</span>
               <EllipsisPopover id={id} handleEdit={onEdit} />
             </div>
             <Droppable direction="vertical" droppableId={id} type="card">

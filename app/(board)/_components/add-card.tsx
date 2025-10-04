@@ -61,6 +61,8 @@ export const AddCard = memo(function AddCard({
 
     if (res.error) {
       toast(res.error);
+    } else {
+      toast.success(res.success);
     }
     reset();
     router.refresh();

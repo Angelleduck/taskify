@@ -23,6 +23,6 @@ export async function updateCard(data: z.infer<typeof updateCardSchema>) {
 
     await prisma.$transaction(transactions);
   } catch {
-    console.log("error updating card");
+    return { error: "error updating card" };
   }
 }

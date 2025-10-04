@@ -13,13 +13,11 @@ export default async function Layout({
   }
 
   return (
-    <>
-      <main className="max-w-screen-xl mx-auto px-4 mt-10">
-        <div className="flex gap-6">
-          <Sidebar className="hidden md:block" workspaces={data} />
-          <div className="flex-1">{children}</div>
-        </div>
-      </main>
-    </>
+    <main className="max-w-screen-xl mx-auto px-4 mt-10">
+      <div className="flex gap-6">
+        <Sidebar className="hidden md:block" workspaces={data} />
+        <div className="flex-1">{children}</div>
+      </div>
+    </main>
   );
 }

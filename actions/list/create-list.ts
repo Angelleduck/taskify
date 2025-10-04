@@ -27,7 +27,7 @@ export async function createList(data: z.infer<typeof createListSchema>) {
       order = lastList.order + 1;
     }
 
-    await prisma.list.create({
+    const list = await prisma.list.create({
       data: {
         name: data.name,
         boardId: data.boardId,
@@ -35,7 +35,7 @@ export async function createList(data: z.infer<typeof createListSchema>) {
       },
     });
 
-    return { success: "list has been created" };
+    return { data: list, success: "List created successfully" };
   } catch {
     return { error: "Something went wrong please retry." };
   }

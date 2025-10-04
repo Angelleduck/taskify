@@ -40,6 +40,7 @@ export function UserButton() {
       >
         <p className="text-sm font-medium pl-8">{user}</p>
         <button
+          type="button"
           onClick={clientAction}
           className="w-full text-neutral-600 hover:bg-neutral-100 flex gap-4 items-center py-2 px-8"
         >

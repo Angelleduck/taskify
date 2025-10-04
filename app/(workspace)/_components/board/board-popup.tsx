@@ -11,7 +11,7 @@ import { LoaderCircle, X } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import type z from "zod";
 import BoardSkeleton from "./board-skeleton";
 import { defaultImages } from "@/constants/images";

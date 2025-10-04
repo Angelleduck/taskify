@@ -36,9 +36,9 @@ export default async function Page({
           Your workspaces
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[124px]">
-          {_boards.map((board, idx) => (
+          {_boards.map((board) => (
             <BoardBox
-              key={idx}
+              key={board.id}
               href={`/board/${board.id}`}
               imageSrc={board.thumb_url}
               name={board.name}
