@@ -2,7 +2,7 @@ import { AddCard } from "./add-card";
 import type { ListWithCard } from "@/actions/list/type";
 import { Draggable, Droppable } from "@hello-pangea/dnd";
 import { DragList } from "./drag-list";
-import { EllipsisPopover } from "./ellipsis-popover";
+import { EllipsisOptions } from "./ellipsis-options";
 import { useState } from "react";
 
 interface ListContainerProps {
@@ -31,7 +31,7 @@ export function ListContainer({ list, index }: ListContainerProps) {
           <div className="w-[272px] shrink-0 p-2 rounded-md bg-[#f2f2f4]">
             <div className="px-3 flex items-center justify-between mb-3">
               <span className="text-sm font-medium">{name}</span>
-              <EllipsisPopover id={id} handleEdit={onEdit} />
+              <EllipsisOptions id={id} handleEdit={onEdit} />
             </div>
             <Droppable direction="vertical" droppableId={id} type="card">
               {(provided) => (

@@ -16,7 +16,7 @@ interface EllipsisPopoverProps {
   id: string;
   handleEdit: () => void;
 }
-export function EllipsisPopover({ id, handleEdit }: EllipsisPopoverProps) {
+export function EllipsisOptions({ id, handleEdit }: EllipsisPopoverProps) {
   const router = useRouter();
   const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -53,7 +53,7 @@ export function EllipsisPopover({ id, handleEdit }: EllipsisPopoverProps) {
           <Ellipsis className="cursor-pointer" />
         </button>
       </PopoverTrigger>
-      <PopoverContent className="w-72 py-3 px-0">
+      <PopoverContent align="start" className="w-72 py-3 px-0">
         <div>
           <p className="text-sm font-medium text-center text-neutral-600">
             List actions

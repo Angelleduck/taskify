@@ -10,7 +10,7 @@ export function ImageBox(props: ImageBoxProps) {
   const { selectedImage, handleSelectedImage, image } = props;
   return (
     <div
-      role="clickable"
+      role="button"
       onClick={() => {
         handleSelectedImage(image);
       }}

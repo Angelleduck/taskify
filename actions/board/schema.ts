@@ -13,4 +13,11 @@ const imageInfoSchema = z.object({
   workspaceId: z.string().min(4, "provide a valid id"),
 });
 
-export { boardPopuSchema, imageInfoSchema };
+const updatetitleSchema = z.object({
+  boardId: z.string().min(6, "provide a valid id"),
+  newTitle: z
+    .string()
+    .min(4, "Title must be at least 4 characters")
+    .max(15, "Title must be at most 15 characters"),
+});
+export { boardPopuSchema, imageInfoSchema, updatetitleSchema };

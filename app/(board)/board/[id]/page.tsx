@@ -1,10 +1,8 @@
 import { board } from "@/actions/board/get-boards";
-import { Button } from "@/components/ui/button";
-import { Ellipsis } from "lucide-react";
 import { BoardButton } from "../../_components/board-button";
 import { getLists } from "@/actions/list/get-list";
 import { DragContext } from "../../_components/drag-context";
-import { Toaster } from "sonner";
+import { EllipsisDelete } from "../../_components/ellipsis-delete";
 
 export default async function Board({
   params,
@@ -14,23 +12,20 @@ export default async function Board({
   const { id } = await params;
   const _board = await board(id);
 
-  if (_board.length < 1) {
+  if (!_board) {
     return "hi";
   }
   const lists = await getLists(id);
 
   return (
     <main
-      style={{ backgroundImage: `url(${_board.at(0)?.image_url})` }}
+      style={{ backgroundImage: `url(${_board?.image_url})` }}
       className="h-screen bg-no-repeat bg-cover bg-center"
     >
-      <Toaster />
       <div className="flex items-center justify-between bg-black/40 px-6 py-[10px] absolute top-14 w-full">
-        <BoardButton />
+        <BoardButton boardTitle={_board.name} boardId={_board.id} />
 
-        <Button className="text-lg text-white font-bold w-8 h-8 bg-transparent hover:bg-white/20">
-          <Ellipsis className="text-white" />
-        </Button>
+        <EllipsisDelete boardId={_board.id} />
       </div>
 
       <DragContext lists={lists} boardId={id} />

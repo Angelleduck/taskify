@@ -17,10 +17,10 @@ export async function boards(workspaceId?: string) {
 
 export async function board(id?: string) {
   if (!id) {
-    return [];
+    return null;
   }
 
-  const data = await prisma.board.findMany({
+  const data = await prisma.board.findUnique({
     where: {
       id,
     },
