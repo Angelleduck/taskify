@@ -1,8 +1,9 @@
-import { Ellipsis } from "lucide-react";
 import { AddCard } from "./add-card";
 import type { ListWithCard } from "@/actions/list/type";
 import { Draggable, Droppable } from "@hello-pangea/dnd";
 import { DragList } from "./drag-list";
+import { EllipsisPopover } from "./ellipsis-popover";
+import { useState } from "react";
 
 interface ListContainerProps {
   list: ListWithCard;
@@ -10,6 +11,15 @@ interface ListContainerProps {
 }
 export function ListContainer({ list, index }: ListContainerProps) {
   const { id, cards, name } = list;
+
+  const [edit, setEdit] = useState(false);
+
+  function onEdit() {
+    setEdit(true);
+  }
+  function onDisableEdit() {
+    setEdit(false);
+  }
   return (
     <Draggable draggableId={id} index={index}>
       {(provided) => (
@@ -21,7 +31,7 @@ export function ListContainer({ list, index }: ListContainerProps) {
           <div className="w-[272px] shrink-0 p-2 rounded-md bg-[#f2f2f4]">
             <div className="px-3 flex items-center justify-between mb-3">
               <span className="text-xs">{name}</span>
-              <Ellipsis className="cursor-pointer" />
+              <EllipsisPopover id={id} handleEdit={onEdit} />
             </div>
             <Droppable direction="vertical" droppableId={id} type="card">
               {(provided) => (
@@ -41,7 +51,12 @@ export function ListContainer({ list, index }: ListContainerProps) {
             </Droppable>
 
             <div>
-              <AddCard listId={id} />
+              <AddCard
+                listId={id}
+                isEditing={edit}
+                handleEdit={onEdit}
+                handleDisableEdit={onDisableEdit}
+              />
             </div>
           </div>
         </div>

@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { useClickOutside } from "@/hooks/useClickOutside";
 import { Plus, X } from "lucide-react";
-import { type KeyboardEvent, memo, useEffect, useRef, useState } from "react";
+import { type KeyboardEvent, memo, useEffect, useRef } from "react";
 import { Input } from "@/components/auth/input";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,13 +15,20 @@ import { toast } from "sonner";
 
 interface AddCardProps {
   listId: string;
+  handleEdit: () => void;
+  handleDisableEdit: () => void;
+  isEditing: boolean;
 }
 
 type InputField = z.infer<typeof createCardSchema>;
 
-export const AddCard = memo(function AddCard({ listId }: AddCardProps) {
+export const AddCard = memo(function AddCard({
+  listId,
+  handleEdit,
+  handleDisableEdit,
+  isEditing,
+}: AddCardProps) {
   const router = useRouter();
-  const [edit, setEdit] = useState(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -40,10 +47,10 @@ export const AddCard = memo(function AddCard({ listId }: AddCardProps) {
     if (inputRef) {
       inputRef.current?.focus();
     }
-  }, [edit]);
+  }, [isEditing]);
 
   const disableEditing = () => {
-    setEdit(false);
+    handleDisableEdit();
     reset();
   };
 
@@ -68,7 +75,7 @@ export const AddCard = memo(function AddCard({ listId }: AddCardProps) {
 
   return (
     <>
-      {edit ? (
+      {isEditing ? (
         <form
           onSubmit={handleSubmit(onsubmit)}
           ref={formRef}
@@ -110,7 +117,7 @@ export const AddCard = memo(function AddCard({ listId }: AddCardProps) {
         </form>
       ) : (
         <Button
-          onClick={() => setEdit(!edit)}
+          onClick={handleEdit}
           className="text-black bg-transparent hover:bg-transparent shadow-none w-full justify-start h-11 p-2"
         >
           <Plus size={18} />
