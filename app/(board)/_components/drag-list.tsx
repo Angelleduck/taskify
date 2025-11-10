@@ -1,3 +1,4 @@
+import { useCardModal } from "@/hooks/useCardModal";
 import { Draggable } from "@hello-pangea/dnd";
 
 interface DragListProps extends React.HTMLAttributes<HTMLElement> {
@@ -6,10 +7,14 @@ interface DragListProps extends React.HTMLAttributes<HTMLElement> {
   index: number;
 }
 export function DragList({ children, cardId, index }: DragListProps) {
+  const { onOpen } = useCardModal();
   return (
     <Draggable draggableId={cardId} index={index}>
       {(provided) => (
         <li
+          onClick={() => {
+            onOpen(cardId);
+          }}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}

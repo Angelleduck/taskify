@@ -24,7 +24,6 @@ export default async function Board({
     >
       <div className="flex items-center justify-between bg-black/40 px-6 py-[10px] absolute top-14 w-full">
         <BoardButton boardTitle={_board.name} boardId={_board.id} />
-
         <EllipsisDelete boardId={_board.id} />
       </div>
 

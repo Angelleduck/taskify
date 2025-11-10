@@ -10,7 +10,11 @@ export async function getLists(boardId?: string) {
       boardId,
     },
     include: {
-      cards: true,
+      cards: {
+        orderBy: {
+          order: "asc",
+        },
+      },
     },
   });
 

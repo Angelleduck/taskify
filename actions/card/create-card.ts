@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import type z from "zod";
 import { createCardSchema } from "./schema";
+import { ca } from "zod/v4/locales";
 
 export async function createCard(data: z.infer<typeof createCardSchema>) {
   try {
@@ -28,14 +29,35 @@ export async function createCard(data: z.infer<typeof createCardSchema>) {
       order = lastCard.order + 1;
     }
 
-    await prisma.card.create({
+    const card = await prisma.card.create({
       data: {
         name: data.name,
         listId: data.listId,
         order: order,
+        description: data.description,
+      },
+      include: {
+        list: {
+          include: {
+            board: {
+              select: {
+                workspaceId: true,
+              },
+            },
+          },
+        },
       },
     });
 
+    await prisma.auditLog.create({
+      data: {
+        workspaceId: card.list.board.workspaceId,
+        entityId: card.id,
+        entity: "CARD",
+        action: "CREATE",
+        entityName: card.name,
+      },
+    });
     return { success: "Card has been created" };
   } catch {
     return { error: "Something went wrong, please retry." };

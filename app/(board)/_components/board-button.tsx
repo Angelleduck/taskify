@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { updatetitleSchema } from "@/actions/board/schema";
-import type z from "zod";
 import { useRouter } from "next/navigation";
 
 interface BoardButtonProps {
@@ -14,7 +13,6 @@ interface BoardButtonProps {
   boardId?: string;
 }
 
-type InputField = z.infer<typeof updatetitleSchema>;
 export function BoardButton({ boardTitle, boardId }: BoardButtonProps) {
   const router = useRouter();
   const [edit, setEdit] = useState(false);

@@ -8,9 +8,18 @@ export async function deleteList(id: string) {
       return { error: "Invalid list ID" };
     }
 
-    await prisma.list.delete({
+    const list = await prisma.list.delete({
       where: {
         id,
+      },
+    });
+
+    await prisma.auditLog.create({
+      data: {
+        cardId: list.id,
+        entity: "LIST",
+        action: "DELETE",
+        cardName: list.name,
       },
     });
     return { success: "List deleted successfully" };

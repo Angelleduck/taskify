@@ -33,6 +33,21 @@ export async function createList(data: z.infer<typeof createListSchema>) {
         boardId: data.boardId,
         order: order,
       },
+      include: {
+        board: {
+          select: { workspaceId: true },
+        },
+      },
+    });
+
+    await prisma.auditLog.create({
+      data: {
+        workspaceId: list.board.workspaceId,
+        entityId: list.id,
+        entity: "LIST",
+        action: "CREATE",
+        entityName: list.name,
+      },
     });
 
     return { data: list, success: "List created successfully" };

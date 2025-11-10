@@ -22,6 +22,8 @@ export async function CreateBoard(
       throw new Error(validatedInfo.error.errors[0].message);
     }
 
+    console.log(imageInfo);
+
     await prisma.board.create({
       data: {
         workspaceId: imageInfo.workspaceId,
@@ -32,14 +34,7 @@ export async function CreateBoard(
     });
 
     return { success: "board has been created" };
-  } catch (error) {
-    if (
-      error instanceof PrismaClientKnownRequestError ||
-      error instanceof PrismaClientValidationError
-    ) {
-      return { error: "Something went wrong please retry." };
-    } else if (error instanceof Error) {
-      return { error: error.message };
-    }
+  } catch {
+    return { error: "Something went wrong please retry." };
   }
 }

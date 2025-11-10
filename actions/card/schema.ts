@@ -10,6 +10,7 @@ const createCardSchema = z.object({
     .string()
     .min(10, "provide valid Id")
     .max(30, "max provide valid Id"),
+  description: z.string().optional(),
 });
 
 const updateCardSchema = z.array(

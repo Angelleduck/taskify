@@ -8,6 +8,7 @@ import { AddList } from "./add-list";
 import { updateList } from "@/actions/list/update-list";
 import { updateCard } from "@/actions/card/update-order";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface DragContextProps {
   lists: ListWithCard[];
@@ -15,6 +16,7 @@ interface DragContextProps {
 }
 
 export function DragContext({ lists, boardId }: DragContextProps) {
+  const router = useRouter();
   const [listsContainer, setListsContainer] = useState(lists);
   useEffect(() => {
     setListsContainer(lists);
@@ -77,6 +79,7 @@ export function DragContext({ lists, boardId }: DragContextProps) {
       setListsContainer(newArray);
       toast.success("Card reordered");
       updateCard(cardUpdate);
+      router.refresh();
     }
   };
 

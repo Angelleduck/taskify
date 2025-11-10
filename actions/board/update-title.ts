@@ -14,12 +14,21 @@ export async function updateTitle(data: z.infer<typeof updatetitleSchema>) {
     console.log(data.boardId);
     console.log(data.newTitle);
 
-    await prisma.board.update({
+    const card = await prisma.board.update({
       where: {
         id: data.boardId,
       },
       data: {
         name: data.newTitle,
+      },
+    });
+
+    await prisma.auditLog.create({
+      data: {
+        cardId: card.id,
+        entity: "CARD",
+        action: "UPDATE",
+        cardName: card.name,
       },
     });
     return { success: "Title updated" };

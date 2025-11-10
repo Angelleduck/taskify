@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Eye, EyeClosed } from "lucide-react";
+import type React from "react";
 import { useState } from "react";
 import type { UseFormRegister, FieldValues, Path } from "react-hook-form";
 

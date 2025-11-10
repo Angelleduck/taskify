@@ -87,15 +87,16 @@ model TwoFactor {
 }
 
 
-model Workspace{
+model Workspace {
   id String @id @default(cuid())
   name String
 
   board Board[]
+  auditLogs AuditLog[]
   @@map("workspace")
 }
 
-model Board{
+model Board {
   id String @id @default(cuid())
   workspaceId String
   name String
@@ -107,7 +108,7 @@ model Board{
   @@map("board")
 }
 
-model List{
+model List {
   id String @id @default(cuid())
   boardId String
   name String
@@ -119,13 +120,36 @@ model List{
   @@map("list")
 }
 
-model Card{
+model Card {
   id String @id @default(cuid())
   listId String
   name String
+  description String?
   order Int
 
   list List @relation(fields: [listId], references: [id] ,onDelete: Cascade)
 
   @@map("card")
+}
+
+enum ACTION {
+  CREATE
+  DELETE
+  UPDATE
+}
+
+enum ENTITY {
+  CARD
+  LIST
+}
+
+model AuditLog {
+  id          String @id @default(cuid())
+  workspaceId String  @map("workspace_id")
+  entityId    String? @map("entity_id")
+  action      ACTION
+  entity      ENTITY
+  entityName    String  @map("entity_name")
+  createdAt   DateTime  @default(now())
+  workspace Workspace @relation(fields: [workspaceId],references: [id],onDelete: Cascade)
 }
