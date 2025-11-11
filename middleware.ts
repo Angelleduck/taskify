@@ -24,6 +24,9 @@ export async function middleware(request: NextRequest) {
       new URL(`/workspace/${data[0].id}`, request.url)
     );
   }
+  if (currentUrl === "/" && session) {
+    return NextResponse.redirect(new URL("/workspace", request.url));
+  }
 
   return NextResponse.next();
 }

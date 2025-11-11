@@ -3,7 +3,6 @@
 import { prisma } from "@/lib/prisma";
 import type z from "zod";
 import { createCardSchema } from "./schema";
-import { ca } from "zod/v4/locales";
 
 export async function createCard(data: z.infer<typeof createCardSchema>) {
   try {

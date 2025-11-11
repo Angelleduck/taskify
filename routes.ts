@@ -6,6 +6,6 @@ export const authRoutes = [
   "/auth/email-verification",
 ];
 
-export const protectedRoutes = ["/workspace"];
+export const protectedRoutes = ["/workspace", "/board"];
 
 export const LOGIN_REDIRECT = "/workspace";

@@ -2,10 +2,16 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { Toaster } from "sonner";
+import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: "Auth Home",
-  description: "Test our security",
+  title: siteConfig.name,
+  description: siteConfig.description,
+  icons: [
+    {
+      url: "/logo.svg",
+    },
+  ],
 };
 
 const inter = Inter({ subsets: ["latin"] });

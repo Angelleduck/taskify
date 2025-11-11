@@ -1,4 +1,4 @@
-import { CreditCard, UserRound } from "lucide-react";
+import { UserRound } from "lucide-react";
 import Hint from "../../_components/hint";
 import {
   Popover,
@@ -9,6 +9,22 @@ import { BoardPopup } from "../../_components/board/board-popup";
 import { workspaces } from "@/actions/workspace/get-workspaces";
 import { boards } from "@/actions/board/get-boards";
 import BoardBox from "@/app/(board)/_components/board-box";
+import { Info } from "../../_components/info";
+import { redirect } from "next/navigation";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const _workspaces = await workspaces();
+
+  const titleName = _workspaces.find((workspace) => workspace.id === id);
+  return {
+    title: `${titleName?.name} | Taskify`,
+  };
+}
 
 export default async function Page({
   params,
@@ -17,19 +33,13 @@ export default async function Page({
 }) {
   const { id } = await params;
   const _workspaces = await workspaces();
+  const workspace = _workspaces.find((workspace) => workspace.id === id);
   const _boards = await boards(id);
 
-  const titleName = _workspaces.find((workspace) => workspace.id === id);
-
+  if (!workspace) redirect("/");
   return (
     <>
-      <div className="py-3 border-b">
-        <p className="font-semibold text-xl">{titleName?.name}</p>
-        <div className="flex items-center gap-1 text-neutral-600">
-          <CreditCard size={12} />
-          <span className="text-xs">Free</span>
-        </div>
-      </div>
+      <Info title={workspace.name} />
       <div className="px-4">
         <div className="flex items-center gap-2 my-4 font-semibold text-neutral-700 text-lg">
           <UserRound />

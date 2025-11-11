@@ -1,6 +1,8 @@
 "use client";
 
-import { CreateBoard } from "@/actions/board/create-board";
+import {
+  CreateBoardFromBoardId,
+} from "@/actions/board/create-board";
 import { boardPopuSchema } from "@/actions/board/schema";
 import { getImages } from "@/actions/get-images";
 import { Input } from "@/components/auth/input";
@@ -13,17 +15,17 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import type z from "zod";
-import BoardSkeleton from "./board-skeleton";
 import { defaultImages } from "@/constants/images";
-import { ImageBox } from "./image-box";
+import BoardSkeleton from "@/app/(workspace)/_components/board/board-skeleton";
+import { ImageBox } from "@/app/(workspace)/_components/board/image-box";
 
 interface BoardProps {
-  workspaceId?: string;
+  boardId?: string;
 }
 
 type InputField = z.infer<typeof boardPopuSchema>;
 
-export function BoardPopup({ workspaceId }: BoardProps) {
+export function BoardPopup({ boardId }: BoardProps) {
   const [images, setImages] = useState<Array<Record<string, any>>>([]);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<Record<string, any>>();
@@ -61,7 +63,7 @@ export function BoardPopup({ workspaceId }: BoardProps) {
   const onsubmit: SubmitHandler<InputField> = async (title) => {
     //Here no need to check for workspaceId, I'm doing it for
     //typescript in imageInfo
-    if (!selectedImage || !workspaceId) {
+    if (!selectedImage || !boardId) {
       setError("root", {
         message: "Select an image",
       });
@@ -71,9 +73,9 @@ export function BoardPopup({ workspaceId }: BoardProps) {
     const imageInfo = {
       image_url: selectedImage.urls.regular as string,
       thumb: selectedImage.urls.regular as string,
-      workspaceId,
+      boardId,
     };
-    const res = await CreateBoard(title, imageInfo);
+    const res = await CreateBoardFromBoardId(title, imageInfo);
 
     if (res?.error) {
       setError("root", {
@@ -82,6 +84,7 @@ export function BoardPopup({ workspaceId }: BoardProps) {
       return;
     }
     router.push(`/board/${res.boardId}`);
+    ref.current?.click();
   };
 
   function handleSelectImage(image: Record<string, any>) {

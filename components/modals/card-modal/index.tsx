@@ -1,6 +1,6 @@
 "use client";
 
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Description } from "./description";
 import { Activity } from "./activity";
 import { Header } from "./header";
@@ -26,7 +26,6 @@ export default function CardModal() {
     { revalidateOnFocus: false }
   );
 
-  console.log(logsData);
   // Revalidate whenever the dialog opens
   useEffect(() => {
     if (isOpen && id) {
@@ -42,6 +41,7 @@ export default function CardModal() {
   if (!id) return;
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogTitle className="hidden">Modal</DialogTitle>
       <DialogContent className="sm:max-w-3xl">
         <div className="grid md:grid-cols-4 grid-cols-3 auto-rows-auto gap-4">
           <div className="col-span-full mb-4">

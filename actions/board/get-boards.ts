@@ -1,5 +1,6 @@
 "use server";
 import { prisma } from "@/lib/prisma";
+import { cache } from "react";
 
 export async function boards(workspaceId?: string) {
   if (!workspaceId) {
@@ -15,7 +16,7 @@ export async function boards(workspaceId?: string) {
   return data;
 }
 
-export async function board(id?: string) {
+export const board = cache(async (id?: string) => {
   if (!id) {
     return null;
   }
@@ -27,4 +28,4 @@ export async function board(id?: string) {
   });
 
   return data;
-}
+});

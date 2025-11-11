@@ -51,7 +51,7 @@ export default function Page() {
       }
 
       router.replace("/workspace");
-    } catch{
+    } catch {
       setError("root", {
         message: "Sorry, something went wrong",
       });
@@ -107,7 +107,10 @@ export default function Page() {
       </form>
 
       <div className="flex gap-2">
-        <button className="flex flex-1 border rounded-md items-center justify-center py-2 hover:bg-black/5 transition">
+        <button
+          type="button"
+          className="flex flex-1 border rounded-md items-center justify-center py-2 hover:bg-black/5 transition"
+        >
           <GoogleIcon className="h-5 w-5" />
         </button>
         <GithubButton />

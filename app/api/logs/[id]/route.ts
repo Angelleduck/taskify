@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 
-export async function GET(request: Request, ctx: { params: { id: string } }) {
+export async function GET(_request: Request, ctx: { params: { id: string } }) {
   const { id } = await ctx.params;
   try {
     if (!id || typeof id !== "string") {
@@ -12,8 +12,7 @@ export async function GET(request: Request, ctx: { params: { id: string } }) {
         entityId: id,
       },
     });
-    console.log(data);
 
     return Response.json(data);
-  } catch (error) {}
+  } catch {}
 }

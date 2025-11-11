@@ -1,7 +1,6 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { revalidateTag } from "next/cache";
 
 interface UpdateTitleProps {
   newTitle: string;

@@ -1,5 +1,5 @@
-import Navbar from "@/app/(workspace)/_components/navbar";
 import CardModal from "@/components/modals/card-modal";
+import Navbar from "../_components/navbar";
 
 export default function Layout({
   children,

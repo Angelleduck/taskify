@@ -4,6 +4,18 @@ import { getLists } from "@/actions/list/get-list";
 import { DragContext } from "../../_components/drag-context";
 import { EllipsisDelete } from "../../_components/ellipsis-delete";
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const _board = await board(id);
+  return {
+    title: `${_board?.name} | Board`,
+  };
+}
+
 export default async function Board({
   params,
 }: {

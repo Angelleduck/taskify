@@ -11,10 +11,7 @@ export async function updateTitle(data: z.infer<typeof updatetitleSchema>) {
       throw new Error(validatedField.error.errors[0].message);
     }
 
-    console.log(data.boardId);
-    console.log(data.newTitle);
-
-    const card = await prisma.board.update({
+    await prisma.board.update({
       where: {
         id: data.boardId,
       },
@@ -23,17 +20,8 @@ export async function updateTitle(data: z.infer<typeof updatetitleSchema>) {
       },
     });
 
-    await prisma.auditLog.create({
-      data: {
-        cardId: card.id,
-        entity: "CARD",
-        action: "UPDATE",
-        cardName: card.name,
-      },
-    });
     return { success: "Title updated" };
   } catch (error) {
-    console.log(error);
     if (error instanceof Error) {
       return { error: error.message };
     }

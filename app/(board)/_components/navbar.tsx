@@ -3,8 +3,7 @@
 import Logo from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { UserButton } from "./user-button";
-import { SidebarMenu } from "./sidebard/sidebar-menu";
+
 import { cn } from "@/lib/utils";
 import { useParams } from "next/navigation";
 import {
@@ -12,7 +11,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { BoardPopup } from "./board/board-popup";
+import { SidebarMenu } from "@/app/(workspace)/_components/sidebard/sidebar-menu";
+import { UserButton } from "@/app/(workspace)/_components/user-button";
+import { BoardPopup } from "./board-popup";
 
 type NavbarProps = React.HTMLAttributes<HTMLElement>;
 
@@ -37,7 +38,7 @@ export default function Navbar({ className }: NavbarProps) {
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-[320px] p-4">
-            <BoardPopup workspaceId={id} />
+            <BoardPopup boardId={id} />
           </PopoverContent>
         </Popover>
       </div>

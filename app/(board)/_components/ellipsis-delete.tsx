@@ -37,7 +37,7 @@ export function EllipsisDelete({ boardId }: EllipsisDeleteProps) {
       <PopoverTrigger asChild>
         <Button
           type="button"
-          className="text-lg text-white font-bold w-8 h-8 bg-transparent hover:bg-white/20"
+          className="text-lg text-white font-bold w-8 h-8 bg-transparent hover:bg-white/20 shadow-none"
         >
           <Ellipsis className="text-white" />
         </Button>

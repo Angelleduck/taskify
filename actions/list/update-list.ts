@@ -21,7 +21,5 @@ export async function updateList(data: z.infer<typeof updateListSchema>) {
     );
 
     await prisma.$transaction(transactions);
-  } catch {
-    console.log("error updating list");
-  }
+  } catch {}
 }

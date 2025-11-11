@@ -36,7 +36,6 @@ export async function deleteCard(id: string) {
     });
     return { success: `Card "${card.name}" has been deleted` };
   } catch (error) {
-    console.log(error);
     return { error: "Something went wrong, please retry." };
   }
 }
