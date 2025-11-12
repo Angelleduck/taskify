@@ -23,6 +23,7 @@ model User {
   updatedAt     DateTime
   sessions      Session[]
   accounts      Account[]
+  limit         Limit?
 
   twoFactorEnabled Boolean?
   twofactors       TwoFactor[]
@@ -152,4 +153,12 @@ model AuditLog {
   entityName    String  @map("entity_name")
   createdAt   DateTime  @default(now())
   workspace Workspace @relation(fields: [workspaceId],references: [id],onDelete: Cascade)
+}
+
+model Limit {
+  id          String @id @default(cuid())
+  userId      String @map("user_id") @unique
+  count       Int       @default(0)
+
+  user User @relation(fields: [userId],references: [id],onDelete: Cascade)
 }

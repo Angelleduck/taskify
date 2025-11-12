@@ -6,6 +6,7 @@ import {
   imageInfoSchema,
   imageInfoSchemaBoard,
 } from "./schema";
+import { canCreateBoard, increaseCountBoard } from "@/lib/limit";
 
 export async function CreateBoard(
   data: z.infer<typeof boardPopuSchema>,
@@ -22,6 +23,14 @@ export async function CreateBoard(
       throw new Error(validatedInfo.error.errors[0].message);
     }
 
+    const canCreate = await canCreateBoard();
+
+    if (!canCreate) {
+      return {
+        error:
+          "You have reached your limit of free boards. Please upgrade to create more.",
+      };
+    }
     const board = await prisma.board.create({
       data: {
         workspaceId: imageInfo.workspaceId,
@@ -30,6 +39,8 @@ export async function CreateBoard(
         thumb_url: imageInfo.thumb,
       },
     });
+
+    await increaseCountBoard();
 
     return { success: "board has been created", boardId: board.id };
   } catch {
@@ -52,6 +63,14 @@ export async function CreateBoardFromBoardId(
       throw new Error(validatedInfo.error.errors[0].message);
     }
 
+    const canCreate = await canCreateBoard();
+
+    if (!canCreate) {
+      return {
+        error:
+          "You have reached your limit of free boards. Please upgrade to create more.",
+      };
+    }
     const board = await prisma.board.findUnique({
       where: {
         id: imageInfo.boardId,
@@ -67,6 +86,7 @@ export async function CreateBoardFromBoardId(
         thumb_url: imageInfo.thumb,
       },
     });
+    await increaseCountBoard();
     return { success: "board has been created", boardId: newBoard.id };
   } catch {
     return { error: "Something went wrong please retry." };

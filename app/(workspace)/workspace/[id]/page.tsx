@@ -11,6 +11,7 @@ import { boards } from "@/actions/board/get-boards";
 import BoardBox from "@/app/(board)/_components/board-box";
 import { Info } from "../../_components/info";
 import { redirect } from "next/navigation";
+import { getCountBoard } from "@/lib/limit";
 
 export async function generateMetadata({
   params,
@@ -37,6 +38,8 @@ export default async function Page({
   const _boards = await boards(id);
 
   if (!workspace) redirect("/");
+
+  const count = await getCountBoard();
   return (
     <>
       <Info title={workspace.name} />
@@ -58,7 +61,7 @@ export default async function Page({
             <PopoverTrigger>
               <div className="h-[124px] bg-neutral-100 rounded-md flex items-center justify-center flex-col relative">
                 <h3 className="text-sm">Create new board</h3>
-                <p className="text-xs">5 remaining</p>
+                <p className="text-xs">{count} remaining</p>
                 <Hint />
               </div>
             </PopoverTrigger>

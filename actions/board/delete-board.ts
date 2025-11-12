@@ -1,5 +1,6 @@
 "use server";
 
+import { decreaseCountBoard } from "@/lib/limit";
 import { prisma } from "@/lib/prisma";
 
 export async function deleteBoard(id: string) {
@@ -13,6 +14,8 @@ export async function deleteBoard(id: string) {
         id,
       },
     });
+
+    await decreaseCountBoard();
 
     return { success: "Board deleted successfully" };
   } catch {
