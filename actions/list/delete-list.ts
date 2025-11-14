@@ -12,14 +12,20 @@ export async function deleteList(id: string) {
       where: {
         id,
       },
+      include: {
+        board: {
+          select: { workspaceId: true },
+        },
+      },
     });
 
     await prisma.auditLog.create({
       data: {
-        cardId: list.id,
+        workspaceId: list.board.workspaceId,
+        entityId: list.id,
         entity: "LIST",
         action: "DELETE",
-        cardName: list.name,
+        entityName: list.name,
       },
     });
     return { success: "List deleted successfully" };
