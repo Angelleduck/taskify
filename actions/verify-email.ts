@@ -18,8 +18,6 @@ export async function verifyEmail(token: string) {
       switch (err) {
         case "INVALID_TOKEN":
           return { error: "Invalid token" };
-        case "TOKEN_EXPIRED":
-          return { error: "Token expired" };
         default:
           return { error: "Sorry something went wrong" };
       }
