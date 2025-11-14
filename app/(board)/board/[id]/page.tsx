@@ -3,6 +3,7 @@ import { BoardButton } from "../../_components/board-button";
 import { getLists } from "@/actions/list/get-list";
 import { DragContext } from "../../_components/drag-context";
 import { EllipsisDelete } from "../../_components/ellipsis-delete";
+import { redirect } from "next/navigation";
 
 export async function generateMetadata({
   params,
@@ -24,9 +25,8 @@ export default async function Board({
   const { id } = await params;
   const _board = await board(id);
 
-  if (!_board) {
-    return "hi";
-  }
+  if (!_board) redirect("/");
+
   const lists = await getLists(id);
 
   return (

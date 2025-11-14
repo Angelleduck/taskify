@@ -1,8 +1,6 @@
 "use client";
 
-import {
-  CreateBoardFromBoardId,
-} from "@/actions/board/create-board";
+import { CreateBoardFromBoardId } from "@/actions/board/create-board";
 import { boardPopuSchema } from "@/actions/board/schema";
 import { getImages } from "@/actions/get-images";
 import { Input } from "@/components/auth/input";
@@ -18,6 +16,7 @@ import type z from "zod";
 import { defaultImages } from "@/constants/images";
 import BoardSkeleton from "@/app/(workspace)/_components/board/board-skeleton";
 import { ImageBox } from "@/app/(workspace)/_components/board/image-box";
+import { useProdModal } from "@/hooks/useProModal";
 
 interface BoardProps {
   boardId?: string;
@@ -30,6 +29,7 @@ export function BoardPopup({ boardId }: BoardProps) {
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<Record<string, any>>();
   const router = useRouter();
+  const { onOpen } = useProdModal();
 
   const ref = useRef<HTMLButtonElement>(null);
 
@@ -81,6 +81,7 @@ export function BoardPopup({ boardId }: BoardProps) {
       setError("root", {
         message: res.error,
       });
+      onOpen();
       return;
     }
     router.push(`/board/${res.boardId}`);

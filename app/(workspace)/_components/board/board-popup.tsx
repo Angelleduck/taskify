@@ -16,6 +16,7 @@ import type z from "zod";
 import BoardSkeleton from "./board-skeleton";
 import { defaultImages } from "@/constants/images";
 import { ImageBox } from "./image-box";
+import { useProdModal } from "@/hooks/useProModal";
 
 interface BoardProps {
   workspaceId?: string;
@@ -28,6 +29,7 @@ export function BoardPopup({ workspaceId }: BoardProps) {
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<Record<string, any>>();
   const router = useRouter();
+  const { onOpen } = useProdModal();
 
   const ref = useRef<HTMLButtonElement>(null);
 
@@ -79,6 +81,7 @@ export function BoardPopup({ workspaceId }: BoardProps) {
       setError("root", {
         message: res.error,
       });
+      onOpen();
       return;
     }
     router.push(`/board/${res.boardId}`);

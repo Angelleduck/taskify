@@ -7,6 +7,7 @@ import {
   imageInfoSchemaBoard,
 } from "./schema";
 import { canCreateBoard, increaseCountBoard } from "@/lib/limit";
+import { checkSubscription } from "@/lib/subscription";
 
 export async function CreateBoard(
   data: z.infer<typeof boardPopuSchema>,
@@ -24,8 +25,9 @@ export async function CreateBoard(
     }
 
     const canCreate = await canCreateBoard();
+    const isPro = await checkSubscription();
 
-    if (!canCreate) {
+    if (!canCreate && !isPro) {
       return {
         error:
           "You have reached your limit of free boards. Please upgrade to create more.",
@@ -38,9 +40,26 @@ export async function CreateBoard(
         image_url: imageInfo.image_url,
         thumb_url: imageInfo.thumb,
       },
+      include: {
+        workspace: {
+          select: {
+            id: true,
+          },
+        },
+      },
     });
 
-    await increaseCountBoard();
+    await prisma.auditLog.create({
+      data: {
+        workspaceId: board.workspaceId,
+        entityId: board.id,
+        entity: "BOARD",
+        action: "CREATE",
+        entityName: board.name,
+      },
+    });
+
+    if (!isPro) await increaseCountBoard();
 
     return { success: "board has been created", boardId: board.id };
   } catch {
@@ -64,8 +83,9 @@ export async function CreateBoardFromBoardId(
     }
 
     const canCreate = await canCreateBoard();
+    const isPro = await checkSubscription();
 
-    if (!canCreate) {
+    if (!canCreate && !isPro) {
       return {
         error:
           "You have reached your limit of free boards. Please upgrade to create more.",
@@ -86,7 +106,7 @@ export async function CreateBoardFromBoardId(
         thumb_url: imageInfo.thumb,
       },
     });
-    await increaseCountBoard();
+    if (!isPro) await increaseCountBoard();
     return { success: "board has been created", boardId: newBoard.id };
   } catch {
     return { error: "Something went wrong please retry." };

@@ -3,6 +3,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import { Toaster } from "sonner";
 import { siteConfig } from "@/config/site";
+import ProModal from "@/components/modals/pro-modal";
 
 export const metadata: Metadata = {
   title: siteConfig.name,
@@ -28,6 +29,7 @@ export default function RootLayout({
       </head> */}
       <body className={`${inter.className}`}>
         <Toaster />
+        <ProModal />
         {children}
       </body>
     </html>
