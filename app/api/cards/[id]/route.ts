@@ -11,10 +11,6 @@ export async function GET(
   }
 
   try {
-    if (!id || typeof id !== "string") {
-      return { error: "Invalid card ID" };
-    }
-
     const data = await prisma.card.findUnique({
       where: {
         id,
