@@ -32,10 +32,6 @@ export async function updatePassword(
       switch (err) {
         case "INVALID_TOKEN":
           return { error: "Invalid token" };
-        case "TOKEN_EXPIRED":
-          //dev forgot to add this case in typescript check
-          //so do ctrl+left click on Errorcode and seach to add it
-          return { error: "Token expired" };
         default:
           return { error: "Sorry something went wrong" };
       }
