@@ -5,8 +5,9 @@ import { DialogCreateButton } from "../create-button";
 import { AccordionList } from "../accordion-list";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { useIsMounted, useLocalStorage } from "usehooks-ts";
+import { useLocalStorage } from "usehooks-ts";
 import Sidebarskeleton from "./sidebar-skeleton";
+import { useEffect, useState } from "react";
 
 interface SidebarProps extends React.ButtonHTMLAttributes<HTMLDivElement> {
   workspaces: {
@@ -16,8 +17,10 @@ interface SidebarProps extends React.ButtonHTMLAttributes<HTMLDivElement> {
 }
 export function Sidebar({ workspaces, className }: SidebarProps) {
   const path = usePathname();
-  const isMounted = useIsMounted();
+  const [isMounted, setisMounted] = useState(false);
   const [value, setValue] = useLocalStorage<string[]>("sidebarKeys", []);
+
+  useEffect(() => setisMounted(true), []);
 
   function handleKey(id: string) {
     //normally I would use includes and filter to check and remove the id
@@ -29,7 +32,7 @@ export function Sidebar({ workspaces, className }: SidebarProps) {
     setValue(newArray);
   }
 
-  if (!isMounted()) return <Sidebarskeleton />;
+  if (!isMounted) return <Sidebarskeleton />;
 
   return (
     <div className={cn("w-64", className)}>
