@@ -23,6 +23,8 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(
       new URL(`/workspace/${data[0].id}`, request.url)
     );
+  } else if (currentUrl === "/workspace" && data.length < 1) {
+    return NextResponse.redirect(new URL("/new", request.url));
   }
   if (currentUrl === "/" && session) {
     return NextResponse.redirect(new URL("/workspace", request.url));
