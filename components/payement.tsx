@@ -28,7 +28,7 @@ export function ButtonPayment() {
         displayMode: "overlay",
         variant: "one-page",
         theme: "dark",
-        successUrl: "http://localhost:3000/",
+        successUrl: process.env.APP_URL,
       },
       customData: {
         userId: session.user.id,
